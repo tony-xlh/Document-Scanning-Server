@@ -26,17 +26,19 @@ def create_DWT():
 def scan():
     resolution = request.args.get('resolution', '300')
     selected_index = request.args.get('selectedIndex', '0')
+    pixelType = request.args.get('pixelType', '0')
     js = '''
         const cb = arguments[arguments.length - 1];
         var options = {};
         options.showUI = false;
         options.resolution = '''+resolution+''';
         options.selectedIndex = '''+selected_index+''';
+        options.pixelType = '''+pixelType+''';
         Scan(options,cb);
         '''
     print(js)
     result = browser.execute_async_script(js);
-                                            
+    print(result)
     if result != False:
         return {"success":True, "base64":result}
     else:
