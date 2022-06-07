@@ -16,13 +16,13 @@ def start_chrome():
     browser = webdriver.Chrome(executable_path=chromedriver, options=chrome_options)
 
 def create_DWT():
-    browser.get('http://127.0.0.1:5000/index.html')
+    browser.get('http://127.0.0.1:5000/DWT.html')
     global DWT_created
     DWT_created = browser.execute_async_script('''
                                             const cb = arguments[arguments.length - 1];
                                             CreateDWT(cb);
                                             ''')
-@app.route('/scan')
+@app.route('/api/scan')
 def scan():
     resolution = request.args.get('resolution', '300')
     selected_index = request.args.get('selectedIndex', '0')
@@ -42,7 +42,7 @@ def scan():
     else:
         return {"success":False}
 
-@app.route('/load')
+@app.route('/api/dwtpage/load')
 def load():
     if DWT_created == False:
         print("dwt loading")
@@ -55,8 +55,8 @@ def load():
         return {"loaded":True}
 
 
-@app.route('/scanners/list')
-def get_scanners_list():
+@app.route('/api/scanner/getlist')
+def get_scanner_list():
     scanners = browser.execute_script('''
                                         scanners = GetScannersList();
                                         return scanners;
