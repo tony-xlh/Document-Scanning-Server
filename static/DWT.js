@@ -30,16 +30,21 @@ function Scan(options,callback) {
     DWObject.IfShowUI = options.showUI;
     DWObject.PixelType = options.pixelType;
     DWObject.Resolution = options.resolution;
-    
+    console.log(options);
     var OnAcquireImageSuccess = function () {
       var success = function (result, indices, type) {
         callback(result.getData(0, result.getLength()));
       };
 
       var error = function (errorCode, errorString) {
+        console.log(errorString);
         callback(false);
       };
-
+      //1 is B&W, 8 is Gray, 24 is RGB
+      if (DWObject.GetImageBitDepth(DWObject.CurrentImageIndexInBuffer) == 1) {
+        DWObject.ConvertToGrayScale(DWObject.CurrentImageIndexInBuffer);
+      }
+        
       DWObject.ConvertToBase64(
         [DWObject.CurrentImageIndexInBuffer],
         Dynamsoft.DWT.EnumDWT_ImageType.IT_JPG,
