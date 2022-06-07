@@ -33,11 +33,13 @@ function Scan(options,callback) {
     console.log(options);
     var OnAcquireImageSuccess = function () {
       var success = function (result, indices, type) {
+        DWObject.RemoveAllImages();
         callback(result.getData(0, result.getLength()));
       };
 
       var error = function (errorCode, errorString) {
         console.log(errorString);
+        DWObject.RemoveAllImages();
         callback(false);
       };
       //1 is B&W, 8 is Gray, 24 is RGB
@@ -51,6 +53,7 @@ function Scan(options,callback) {
         success,
         error
       );
+      
     }
     var OnAcquireImageError = function () {
       callback(false);
