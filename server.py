@@ -11,7 +11,7 @@ app = Flask(__name__, static_url_path='/', static_folder='static')
 def start_chrome():
     chromedriver = 'chromedriver102.exe'
     chrome_options = webdriver.ChromeOptions()
-    #chrome_options.add_argument('headless')
+    chrome_options.add_argument('headless')
     global browser
     browser = webdriver.Chrome(executable_path=chromedriver, options=chrome_options)
 

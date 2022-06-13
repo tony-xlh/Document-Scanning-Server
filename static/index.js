@@ -50,7 +50,7 @@ function loadScannersList(){
 
 
 function scan(){
-  
+  var scanButton = document.getElementById("scanButton");
   var resolution = document.getElementById("resolutionSelect").selectedOptions[0].value;
   var selectedIndex = document.getElementById("scannerselect").selectedIndex;
   var url = "/api/scan?";
@@ -69,7 +69,9 @@ function scan(){
         scannedImage.src = "data:image/jpg;base64," + result.base64;
       }
     }
+    scanButton.innerText = "Scan";
   }
+  scanButton.innerText = "Scanning...";
   xhr.send();
 }
 
